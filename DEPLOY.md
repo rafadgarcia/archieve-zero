@@ -50,7 +50,7 @@ Automação futura: testes antes da cópia, deploy por release versionada, aprov
 
 ## Atualização manual na VM
 
-O script `restart-archieve` atualiza o checkout, recusa sobrescrever alterações locais, executa `npm test` e recarrega o Caddy somente se ele estiver ativo. Como o Archive é estático, não há container do app para reiniciar.
+O script `restart-archieve` atualiza o checkout, recusa sobrescrever alterações locais, executa `npm test` quando Node/npm estiverem disponíveis e recarrega o Caddy somente se ele estiver ativo. Como o Archive é estático, não há container do app para reiniciar; em uma VM sem Node, a atualização dos arquivos continua normalmente.
 
 Na primeira instalação:
 

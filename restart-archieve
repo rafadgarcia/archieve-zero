@@ -10,7 +10,6 @@ fail() { printf '[archieve] ERRO: %s\n' "$*" >&2; exit 1; }
 
 [[ "$(id -un)" != "root" ]] || fail 'não execute como root; use o usuário ubuntu.'
 command -v git >/dev/null || fail 'git não encontrado.'
-command -v node >/dev/null || fail 'node não encontrado.'
 
 cd "$APP_DIR"
 [[ -d .git ]] || fail "repositório não encontrado em $APP_DIR"
@@ -27,8 +26,12 @@ if [[ "$before" == "$after" ]]; then
   exit 0
 fi
 
-log 'Executando testes...'
-npm test
+if command -v node >/dev/null && command -v npm >/dev/null; then
+  log 'Executando testes...'
+  npm test
+else
+  log 'Node/npm não encontrados; testes ignorados (deploy estático).'
+fi
 
 if [[ -f "$PROXY_DIR/compose.yaml" ]] && docker compose -f "$PROXY_DIR/compose.yaml" ps --status running --services 2>/dev/null | grep -qx caddy; then
   log 'Conteúdo estático atualizado; nenhum restart do Caddy é necessário.'

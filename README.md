@@ -17,9 +17,9 @@ Abra http://127.0.0.1:4174. Não abra por `file://`: a biblioteca usa fetch. Nã
 ## Estrutura e funções
 
 - `index.html`: interface semântica, filtros e leitor.
-- `css/terminal.css`: tokens verde-fósforo, layout adaptativo e scanlines estáticas opcionais. Sem flashes.
+- `css/terminal.css`: tokens verde-fósforo, layout adaptativo e scanlines CRT permanentes. Sem flashes.
 - `js/core.js`: `parseDocument` extrai metadados simples; `search` combina palavras e filtros, ignorando acentos; `renderMarkdown` gera HTML de um subconjunto seguro; `escape` escapa texto.
-- `js/app.js`: carregamento paralelo do acervo, erro parcial, navegação por hash, filtros e preferência CRT. Não usa a autenticação do Owlbear.
+- `js/app.js`: carregamento paralelo do acervo, erro parcial, navegação por hash, filtros e metadados paranormais. Não usa a autenticação do Owlbear.
 - `docs/index.json`: lista explícita dos documentos publicados.
 - `docs/<categoria>/*.md`: conteúdo e metadados.
 - `test/core.test.js`: testes de leitura, busca, renderização e segurança do HTML.

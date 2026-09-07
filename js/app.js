@@ -20,7 +20,8 @@ function openDocument(focus=false){
   const doc=documents.find(d=>d.id===id);
   if(!doc){$('document').textContent='Registro não encontrado neste índice.';return;}
   syncDirectory(doc.categoria);
-  $('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACERVO DA CAMPANHA</div><div class="metadata">${['categoria','elemento','status','integridade'].filter(k=>doc[k]).map(k=>`<span>${k}: ${escape(doc[k])}</span>`).join('')}</div>${renderMarkdown(doc.body)}<section aria-label="Proveniência"><h3>Fonte do registro</h3><p>${escape(doc.fonte || 'Não informada')}</p><p>${escape(doc.secao || '')}</p></section>`;
+  const fields=['categoria','elemento','status','ameaca','instabilidade','classificacao','integridade','autor','data_registro','ultima_atualizacao'];
+  $('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACERVO DA CAMPANHA</div><div class="metadata">${fields.filter(k=>doc[k]).map(k=>`<span>${escape(k)}: ${escape(doc[k])}</span>`).join('')}</div>${renderMarkdown(doc.body)}<section aria-label="Proveniência"><h3>Fonte do registro</h3><p>${escape(doc.fonte || 'Não informada')}</p><p>${escape(doc.secao || '')}</p></section>`;
   $('document').insertAdjacentHTML('beforeend',renderAttachments(doc.attachments));
   displayResults();
   if(focus) $('document').focus();

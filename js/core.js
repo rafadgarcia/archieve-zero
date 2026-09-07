@@ -27,6 +27,13 @@ export function diagnose(docs) {
   return {total:docs.length,sourced:states.filter(s=>s.hasSource).length,censored:states.filter(s=>s.censored).length,corrupted:states.filter(s=>s.corrupted).length,withInstability:states.filter(s=>s.instability!=='Não informada').length,statuses:new Set(docs.map(d=>d.status).filter(Boolean)).size};
 }
 
+export function isUnlocked(id, unlocked=[]) { return unlocked.includes(id); }
+export function unlockRecord(record, code) {
+  if(!record?.lock) return {ok:true,reason:'public'};
+  const expected=String(record.lock.code||'');
+  return expected && String(code).trim()===expected ? {ok:true,reason:'code'} : {ok:false,reason:'invalid'};
+}
+
 // Deliberately restricted Markdown: no raw HTML or executable URL protocols.
 export function renderMarkdown(source) {
   const inline = text => escape(text.replace(/\[\[REDACTED:[\s\S]*?\]\]/g,'████████')

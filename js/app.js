@@ -1,4 +1,4 @@
-import {diagnose,escape,parseDocument,renderMarkdown,search} from './core.js';
+import {diagnose,escape,isUnlocked,parseDocument,renderMarkdown,search,unlockRecord} from './core.js';
 import {renderAttachments} from './attachments.js';
 import {setupLightbox} from './lightbox.js';
 const $=id=>document.getElementById(id);
@@ -20,6 +20,8 @@ function openDocument(focus=false){
   const doc=documents.find(d=>d.id===id);
   if(!doc){$('document').textContent='Registro não encontrado neste índice.';return;}
   syncDirectory(doc.categoria);
+  let unlocked=[];try{unlocked=JSON.parse(localStorage.getItem('archive.unlocked')||'[]');}catch{}
+  if(doc.lock&&!isUnlocked(doc.id,unlocked)){$('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACESSO RESTRITO</div><h2>Arquivo bloqueado</h2><p>Este registro exige um código de campanha.</p><form class="unlock-form"><label for="unlock-code">Código de desbloqueio</label><div class="search-row"><input id="unlock-code" inputmode="numeric" autocomplete="off" required><button>Desbloquear</button></div><p id="unlock-status" role="status"></p></form>`;return;}
   const fields=['categoria','elemento','status','ameaca','instabilidade','classificacao','integridade','autor','data_registro','ultima_atualizacao'];
   $('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACERVO DA CAMPANHA</div><div class="metadata">${fields.filter(k=>doc[k]).map(k=>`<span>${escape(k)}: ${escape(doc[k])}</span>`).join('')}</div>${renderMarkdown(doc.body)}<section aria-label="Proveniência"><h3>Fonte do registro</h3><p>${escape(doc.fonte || 'Não informada')}</p><p>${escape(doc.secao || '')}</p></section>`;
   $('document').insertAdjacentHTML('beforeend',renderAttachments(doc.attachments));
@@ -44,6 +46,7 @@ $('document').addEventListener('click',event=>{
     openDocument(true);
   }
 });
+$('document').addEventListener('submit',event=>{if(!event.target.matches('.unlock-form'))return;event.preventDefault();const doc=documents.find(d=>d.id===location.hash.slice(1));const result=unlockRecord(doc,$('unlock-code').value);if(!result.ok){$('unlock-status').textContent='Código inválido.';return;}let unlocked=[];try{unlocked=JSON.parse(localStorage.getItem('archive.unlocked')||'[]');}catch{};if(!unlocked.includes(doc.id))unlocked.push(doc.id);try{localStorage.setItem('archive.unlocked',JSON.stringify(unlocked));}catch{};openDocument(true);});
 $('search-form').addEventListener('submit',event=>event.preventDefault());
 $('search-form').addEventListener('input',displayResults);
 $('search-form').addEventListener('reset',event=>{
@@ -61,7 +64,7 @@ async function load(){
     const file=await fetch(`docs/${entry.path}`);if(!file.ok)throw Error('Documento indisponível');
     const {meta,body}=parseDocument(await file.text());
     if(!/^[A-Z]+-[A-Z0-9]+$/.test(meta.id)||!meta.titulo)throw Error('Metadados inválidos');
-    return {...meta,body,attachments:entry.attachments};
+    return {...meta,body,attachments:entry.attachments,lock:entry.lock};
   }));
   documents=settled.filter(r=>r.status==='fulfilled').map(r=>r.value);
   const failed=settled.length-documents.length;

@@ -1,0 +1,1 @@
+{"name":"archive-paranormal","private":true,"type":"module","scripts":{"test":"node --test","start":"node serve.mjs"}}

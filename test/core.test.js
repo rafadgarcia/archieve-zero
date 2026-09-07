@@ -1,0 +1,26 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {renderMarkdown, search, parseDocument} from '../js/core.js';
+test('reads metadata separately from the body',()=>{
+  assert.deepEqual(parseDocument('---\nid: ART-001\ntitulo: Câmera\n---\n# Registro'),{meta:{id:'ART-001',titulo:'Câmera'},body:'# Registro'});
+});
+test('search combines accent-insensitive full text and filters',()=>{
+  const docs=[{id:'ART-001',titulo:'Câmera',categoria:'Artefatos',elemento:'Energia',status:'Confirmado',body:'Assinatura residual'}];
+  assert.equal(search(docs,'camera residual',{categoria:'Artefatos'}).length,1);
+  assert.equal(search(docs,'',{elemento:'Morte'}).length,0);
+});
+test('renders basic Markdown and wiki links',()=>{
+  const html=renderMarkdown('# Registro\n\n**Forte** e [[ART-001]]\n\n- Evidência');
+  assert.match(html,/<h2>Registro<\/h2>/);
+  assert.match(html,/<strong>Forte<\/strong>/);
+  assert.match(html,/href="#ART-001"/);
+  assert.match(html,/<li>Evidência<\/li>/);
+});
+test('escapes raw HTML and never creates unsafe links',()=>{
+  const html=renderMarkdown('<img src=x onerror=alert(1)>\n\n[link](javascript:alert)');
+  assert.ok(!html.includes('<img'));
+  assert.ok(!html.includes('href="javascript:'));
+});
+test('redaction removes source text from rendered markup',()=>{
+  assert.ok(!renderMarkdown('[[REDACTED: segredo]]').includes('segredo'));
+});

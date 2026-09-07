@@ -1,0 +1,22 @@
+[
+ {"path":"pessoas/oshino.md"},
+ {"path":"pessoas/verissimo.md"},
+ {"path":"pessoas/jonas-steal.md","attachments":[
+  {"path":"assets/jonas-steal/foto.jpeg","title":"Foto","alt":"Retrato de Jonas Steal com óculos e jaleco"},
+  {"path":"assets/jonas-steal/cracha.jpeg","title":"Crachá"},
+  {"path":"assets/jonas-steal/ficha.jpeg","title":"Ficha"},
+  {"path":"assets/jonas-steal/local.jpeg","title":"Local"},
+  {"path":"assets/jonas-steal/localizacoes.jpeg","title":"Localizações"},
+  {"path":"assets/jonas-steal/nota.jpeg","title":"Nota"},
+  {"path":"assets/jonas-steal/nota2.jpeg","title":"Nota 2"}
+ ]},
+ {"path":"pessoas/reiner.md"},
+ {"path":"pessoas/otavio-fritz.md"},
+ {"path":"pessoas/kian.md"},
+ {"path":"artefatos/espada-incidente-zero.md"},
+ {"path":"ocorrencias/incidente-zero.md"},
+ {"path":"organizacoes/veritus.md"},
+ {"path":"pesquisas/ancoras.md"},
+ {"path":"pesquisas/ciclos.md"},
+ {"path":"pesquisas/projeto-k.md"}
+]

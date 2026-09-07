@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {renderMarkdown, search, parseDocument} from '../js/core.js';
+import {diagnose,recordState,renderMarkdown, search, parseDocument} from '../js/core.js';
 test('reads metadata separately from the body',()=>{
   assert.deepEqual(parseDocument('---\nid: ART-001\ntitulo: Câmera\n---\n# Registro'),{meta:{id:'ART-001',titulo:'Câmera'},body:'# Registro'});
 });
@@ -23,4 +23,9 @@ test('escapes raw HTML and never creates unsafe links',()=>{
 });
 test('redaction removes source text from rendered markup',()=>{
   assert.ok(!renderMarkdown('[[REDACTED: segredo]]').includes('segredo'));
+});
+test('diagnoses paranormal markers without inventing missing values',()=>{
+  const docs=[{body:'[[REDACTED: segredo]] [[CORRUPTED: ruído]]',fonte:'fonte.md',status:'Em análise'},{body:'texto',status:'Confirmado',instabilidade:'2'}];
+  assert.deepEqual(recordState(docs[0]),{censored:true,corrupted:true,hasSource:true,hasStatus:true,instability:'Não informada'});
+  assert.deepEqual(diagnose(docs),{total:2,sourced:1,censored:1,corrupted:1,withInstability:1,statuses:2});
 });

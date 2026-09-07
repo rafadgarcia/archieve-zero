@@ -32,3 +32,4 @@ body>noscript{position:fixed;bottom:0;background:var(--bg);z-index:3}
 .viewer-help{grid-column:1/-1;text-align:center;font-size:11px;color:var(--muted);margin:0 0 12px}.lightbox button:disabled{opacity:.35;cursor:default}
 @media(max-width:600px){.lightbox[open]{grid-template-columns:44px minmax(0,1fr) 44px;gap:4px}.viewer-bar{padding:12px 8px}.viewer-bar button{padding:8px;margin-left:4px}.viewer-prev,.viewer-next{width:40px;height:40px}}
 @media(prefers-reduced-motion:reduce){body.crt:after{display:none}}
+.diagnostic{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:12px;border:1px solid var(--line);background:#121812;color:var(--muted);font-size:10px;letter-spacing:.04em}.diagnostic span{padding:4px 7px;border-left:2px solid var(--amber)}

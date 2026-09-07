@@ -1,4 +1,4 @@
-import {escape,parseDocument,renderMarkdown,search} from './core.js';
+import {diagnose,escape,parseDocument,renderMarkdown,search} from './core.js';
 import {renderAttachments} from './attachments.js';
 import {setupLightbox} from './lightbox.js';
 const $=id=>document.getElementById(id);
@@ -69,5 +69,6 @@ async function load(){
     const option=document.createElement('option');option.value=option.textContent=value;$(id).append(option);
   }
   $('integrity').textContent=failed?`ÍNDICE: ${failed} FALHA(S) DE LEITURA`:`ÍNDICE: ${documents.length} REGISTROS`;
+  const report=diagnose(documents); $('diagnostic').innerHTML=`<span>REGISTROS: ${report.total}</span><span>FONTES: ${report.sourced}/${report.total}</span><span>CENSURAS: ${report.censored}</span><span>CORRUPÇÕES: ${report.corrupted}</span><span>INSTABILIDADE: ${report.withInstability}/${report.total}</span><span>ESTADOS: ${report.statuses}</span>`;
   displayResults();openDocument();
 }load().catch(()=>{$('result-status').textContent='Não foi possível carregar o acervo. Recarregue a página. Use um servidor HTTP, não file://.';$('integrity').textContent='ÍNDICE: INDISPONÍVEL';});

@@ -17,6 +17,16 @@ export function search(docs, query, filters = {}) {
     && words.every(word=>normalize(Object.values(doc).join(' ')).includes(word)));
 }
 
+export function recordState(doc) {
+  const body=String(doc.body||'');
+  return {censored:/\[\[REDACTED:/i.test(body),corrupted:/\[\[CORRUPTED:/i.test(body),hasSource:Boolean(doc.fonte),hasStatus:Boolean(doc.status),instability:doc.instabilidade||'Não informada'};
+}
+
+export function diagnose(docs) {
+  const states=docs.map(recordState);
+  return {total:docs.length,sourced:states.filter(s=>s.hasSource).length,censored:states.filter(s=>s.censored).length,corrupted:states.filter(s=>s.corrupted).length,withInstability:states.filter(s=>s.instability!=='Não informada').length,statuses:new Set(docs.map(d=>d.status).filter(Boolean)).size};
+}
+
 // Deliberately restricted Markdown: no raw HTML or executable URL protocols.
 export function renderMarkdown(source) {
   const inline = text => escape(text.replace(/\[\[REDACTED:[\s\S]*?\]\]/g,'████████')

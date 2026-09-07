@@ -51,9 +51,6 @@ $('search-form').addEventListener('reset',event=>{
   displayResults();
 });
 window.addEventListener('hashchange',()=>openDocument(true));
-try{$('effects').checked=localStorage.getItem('archive.crt')!=='off';}catch{}
-function setEffects(){document.body.classList.toggle('crt',$('effects').checked);try{localStorage.setItem('archive.crt',$('effects').checked?'on':'off');}catch{}}
-$('effects').addEventListener('change',setEffects);setEffects();
 async function load(){
   const response=await fetch('docs/index.json');if(!response.ok)throw Error('Índice indisponível');
   const entries=await response.json();

@@ -4,7 +4,7 @@ import {setupLightbox} from './lightbox.js';
 const $=id=>document.getElementById(id);
 setupLightbox($('document'));
 let documents=[], category='';
-const categories=['Artefatos','Criaturas','Pessoas','Locais','Ocorrências','Rituais','Organizações','Pesquisas'];
+const categories=['Artefatos','Criaturas','Pessoas','Locais','Ocorrências','Rituais','Organizações','Ameaças','Pesquisas'];
 function displayResults(){
   const found=search(documents,$('query').value,{categoria:category,elemento:$('element').value,status:$('status').value});
   $('result-status').textContent=`${found.length} REGISTRO(S) / ${category || 'TODOS OS DIRETÓRIOS'}`;

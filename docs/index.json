@@ -12,7 +12,10 @@
  ]},
  {"path":"pessoas/reiner.md"},
  {"path":"pessoas/otavio-fritz.md"},
- {"path":"pessoas/kian.md"},
+ {"path":"ameacas/kian.md"},
+ {"path":"ameacas/giovanni-opspor.md"},
+ {"path":"ameacas/lana-dave.md"},
+ {"path":"criaturas/mascara-caveira.md"},
  {"path":"artefatos/espada-incidente-zero.md"},
  {"path":"artefatos/camera-aura.md"},
  {"path":"ocorrencias/incidente-zero.md"},
@@ -20,4 +23,5 @@
  {"path":"pesquisas/ancoras.md"},
  {"path":"pesquisas/ciclos.md"},
  {"path":"pesquisas/projeto-k.md"}
+,{"path":"pesquisas/caso-fritz.md"}
 ]

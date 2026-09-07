@@ -7,12 +7,13 @@ fonte: 02_DOSSIES_INVESTIGATIVOS/Fichamento_Aliados_e_Ameacas.md
 secao: 1. Aliados e Membros da Ordem — Sr. Veríssimo
 tags: ordem, jonas, otávio, ciclo
 ---
-# Sr. Veríssimo
 
-Líder histórico dos agentes da Ordem. Convocou os novatos na cafeteria para a investigação da Escola Nostradamus.
 
-O fichamento o registra como desaparecido. Em uma visão temporal, foi visto no laboratório de Otávio Fritz pressionando o cientista sobre a hipótese de um novo ciclo.
+# 🔹 Sr. Veríssimo
+- **Papel:** Líder histórico dos agentes da Ordem.
+- **Histórico:** Convocou os novatos na cafeteria para a investigação inicial da Escola Nostradamus. Desapareceu misteriosamente sem deixar rastros logo após o colapso inicial.
+- **Nova Revelação (Visão Temporal):** Visto no laboratório secreto de Otávio Fritz, pressionando o cientista: *"A minha hipótese de que um novo ciclo está começando está cada vez mais próxima"*.
+- **Status:** Desaparecido. O Outro Lado ordenou que Oshino o encontre para conseguir chegar até Jonas.
 
-A orientação recebida por [[PES-OSHINO]] aponta para encontrá-lo como caminho até [[PES-JONAS]]. O paradeiro não é informado na fonte.
 
-Relacionado a [[PES-OTAVIO]] e [[PESQ-CICLOS]].
+> Recorte de trabalho do fichamento consolidado. O registro detalhado do Archive pode estar no mesmo diretório; esta cópia preserva o contexto da fonte.

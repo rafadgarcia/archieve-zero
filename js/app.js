@@ -1,4 +1,4 @@
-import {buildGraph,diagnose,escape,isUnlocked,parseDocument,renderMarkdown,search,unlockRecord} from './core.js';
+import {buildGraph,buildTimeline,diagnose,escape,isUnlocked,parseDocument,renderMarkdown,search,unlockRecord} from './core.js';
 import {renderAttachments} from './attachments.js';
 import {setupLightbox} from './lightbox.js';
 const $=id=>document.getElementById(id);
@@ -24,7 +24,9 @@ function openDocument(focus=false){
   if(doc.lock&&!isUnlocked(doc.id,unlocked)){$('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACESSO RESTRITO</div><h2>Arquivo bloqueado</h2><p>Este registro exige um código de campanha.</p><form class="unlock-form"><label for="unlock-code">Código de desbloqueio</label><div class="search-row"><input id="unlock-code" inputmode="numeric" autocomplete="off" required><button>Desbloquear</button></div><p id="unlock-status" role="status"></p></form>`;return;}
   const fields=['categoria','elemento','status','ameaca','instabilidade','classificacao','integridade','autor','data_registro','ultima_atualizacao'];
   $('document').innerHTML=`<div class="eyebrow">REGISTRO ${doc.id} / ACERVO DA CAMPANHA</div><div class="metadata">${fields.filter(k=>doc[k]).map(k=>`<span>${escape(k)}: ${escape(doc[k])}</span>`).join('')}</div>${renderMarkdown(doc.body)}<section aria-label="Proveniência"><h3>Fonte do registro</h3><p>${escape(doc.fonte || 'Não informada')}</p><p>${escape(doc.secao || '')}</p></section>`;
-  $('document').insertAdjacentHTML('beforeend',renderAttachments(doc.attachments));
+  $('document').insertAdjacentHTML('beforeend',renderAttachments(doc.attachments)+`<section class="notes" aria-label="Anotações locais"><h3>Anotação local</h3><textarea id="local-note" rows="4" placeholder="Anotações deste registro ficam apenas neste navegador."></textarea></section>`);
+  try{$('local-note').value=localStorage.getItem(`archive.note.${doc.id}`)||'';}catch{}
+  $('local-note').addEventListener('input',event=>{try{localStorage.setItem(`archive.note.${doc.id}`,event.target.value);}catch{}});
   displayResults();
   if(focus) $('document').focus();
 }
@@ -38,6 +40,7 @@ $('categories').addEventListener('click',event=>{
   displayResults();
 });
 $('graph-toggle').addEventListener('click',()=>{const panel=$('graph-panel');const open=panel.hidden;panel.hidden=!open;$('graph-toggle').setAttribute('aria-expanded',String(open));});
+$('timeline-toggle').addEventListener('click',()=>{const panel=$('timeline-panel');const open=panel.hidden;panel.hidden=!open;$('timeline-toggle').setAttribute('aria-expanded',String(open));});
 // Keep hash navigation and directory navigation in one state flow.
 $('document').addEventListener('click',event=>{
   const link=event.target.closest('a[href^="#"]');
@@ -75,5 +78,6 @@ async function load(){
   $('integrity').textContent=failed?`ÍNDICE: ${failed} FALHA(S) DE LEITURA`:`ÍNDICE: ${documents.length} REGISTROS`;
   const report=diagnose(documents); $('diagnostic').innerHTML=`<span>REGISTROS: ${report.total}</span><span>FONTES: ${report.sourced}/${report.total}</span><span>CENSURAS: ${report.censored}</span><span>CORRUPÇÕES: ${report.corrupted}</span><span>INSTABILIDADE: ${report.withInstability}/${report.total}</span><span>ESTADOS: ${report.statuses}</span>`;
   const graph=buildGraph(documents); $('graph-list').innerHTML=graph.length?graph.map(edge=>`<a href="#${edge.from}">${edge.from}</a><span>→</span><a href="#${edge.to}">${edge.to}</a>`).join('<br>'):'<p>Nenhuma relação explícita registrada.</p>';
+  const timeline=buildTimeline(documents); $('timeline-list').innerHTML=timeline.length?timeline.map(item=>`<p><code>${escape(item.date)}</code> <a href="#${item.id}">${escape(item.title)}</a></p>`).join(''):'<p>Nenhuma data explícita registrada.</p>';
   displayResults();openDocument();
 }load().catch(()=>{$('result-status').textContent='Não foi possível carregar o acervo. Recarregue a página. Use um servidor HTTP, não file://.';$('integrity').textContent='ÍNDICE: INDISPONÍVEL';});

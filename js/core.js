@@ -39,6 +39,10 @@ export function buildGraph(docs) {
   return docs.flatMap(doc=>[...String(doc.body||'').matchAll(/\[\[([A-Z]+-[\w?]+)\]\]/g)].filter(match=>ids.has(match[1])).map(match=>({from:doc.id,to:match[1]})));
 }
 
+export function buildTimeline(docs) {
+  return docs.flatMap(doc=>[...String(doc.body||'').matchAll(/\b(\d{2}\/\d{2}\/\d{4}|\d{4}-\d{2}-\d{2})\b/g)].map(match=>({id:doc.id,date:match[1],title:doc.titulo}))).sort((a,b)=>a.date.localeCompare(b.date));
+}
+
 // Deliberately restricted Markdown: no raw HTML or executable URL protocols.
 export function renderMarkdown(source) {
   const inline = text => escape(text.replace(/\[\[REDACTED:[\s\S]*?\]\]/g,'████████')

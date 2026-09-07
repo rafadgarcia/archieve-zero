@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {buildGraph,diagnose,isUnlocked,recordState,renderMarkdown, search, parseDocument,unlockRecord} from '../js/core.js';
+import {buildGraph,buildTimeline,diagnose,isUnlocked,recordState,renderMarkdown, search, parseDocument,unlockRecord} from '../js/core.js';
 test('reads metadata separately from the body',()=>{
   assert.deepEqual(parseDocument('---\nid: ART-001\ntitulo: Câmera\n---\n# Registro'),{meta:{id:'ART-001',titulo:'Câmera'},body:'# Registro'});
 });
@@ -38,4 +38,7 @@ test('narrative records require the configured code',()=>{
 });
 test('builds relations only from resolvable wiki links',()=>{
   assert.deepEqual(buildGraph([{id:'PES-1',body:'Veja [[ART-1]] e [[NAO-EXISTE]]'},{id:'ART-1',body:''}]),[{from:'PES-1',to:'ART-1'}]);
+});
+test('builds a timeline only from dates present in documents',()=>{
+  assert.deepEqual(buildTimeline([{id:'A-1',titulo:'A',body:'Ocorrido em 12/08/2026'},{id:'B-1',titulo:'B',body:'Sem data'}]),[{id:'A-1',date:'12/08/2026',title:'A'}]);
 });

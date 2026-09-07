@@ -12,7 +12,7 @@ tags: ocultista, lâmina maldita, câmera, projeto k
 
 > Documento pessoal criado para preservar decisões, valores e prioridades de Oshino após a perda dos sentimentos.
 
-\---
+---
 
 # 1\. Condição atual
 
@@ -40,17 +40,17 @@ Ainda não está confirmado se ele perdeu:
 * capacidade de reconhecer relações;
 * princípios morais aprendidos.
 
-\---
+---
 
 # 2\. Regra principal
 
-> \*\*Não confundir ausência de sentimento com ausência de decisão.\*\*
+> **Não confundir ausência de sentimento com ausência de decisão.**
 
 O Oshino atual pode não sentir que algo importa.
 
 Mesmo assim, pode reconhecer que o Oshino anterior considerava aquilo importante.
 
-\---
+---
 
 # 3\. Prioridades registradas
 
@@ -65,7 +65,7 @@ Mesmo assim, pode reconhecer que o Oshino anterior considerava aquilo importante
 9. Não depender cegamente do Outro Lado.
 10. Registrar toda informação crítica.
 
-\---
+---
 
 # 4\. Protocolo de aliados
 
@@ -77,7 +77,7 @@ Até nova avaliação:
 * consultar registros anteriores quando houver dúvida sobre relações pessoais;
 * não tomar decisões irreversíveis baseadas apenas em eficiência.
 
-\---
+---
 
 # 5\. Protocolo de civis
 
@@ -88,7 +88,7 @@ Até nova avaliação:
 * preservar vidas quando isso não comprometer diretamente a sobrevivência da equipe;
 * registrar exceções e justificativas.
 
-\---
+---
 
 # 6\. Protocolo paranormal
 
@@ -98,7 +98,7 @@ Até nova avaliação:
 * Registrar mudanças de memória, identidade, autonomia ou comportamento.
 * Informar pelo menos um aliado caso surjam sinais de perda de controle.
 
-\---
+---
 
 # 7\. Protocolo de continuidade
 
@@ -111,17 +111,17 @@ Caso Oshino perceba que sua identidade está se deteriorando:
 5. investigar reversão;
 6. impedir que informações críticas desapareçam com ele.
 
-\---
+---
 
 # 8\. Frases de referência
 
-> \*\*“Eu não preciso sentir que uma coisa é importante para saber que ela é.”\*\*
+> **“Eu não preciso sentir que uma coisa é importante para saber que ela é.”**
 
-> \*\*“Ausência de emoção não é ausência de responsabilidade.”\*\*
+> **“Ausência de emoção não é ausência de responsabilidade.”**
 
-> \*\*“Otávio entregou o controle para obter respostas. Eu entreguei meus sentimentos. Preciso descobrir o que o Outro Lado espera depois.”\*\*
+> **“Otávio entregou o controle para obter respostas. Eu entreguei meus sentimentos. Preciso descobrir o que o Outro Lado espera depois.”**
 
-\---
+---
 
 # 9\. Espaço para registros futuros
 

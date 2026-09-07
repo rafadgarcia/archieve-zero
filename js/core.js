@@ -25,13 +25,20 @@ export function renderMarkdown(source) {
     .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" rel="noreferrer">$1 ↗</a>')
     .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
     .replace(/`([^`]+)`/g,'<code>$1</code>');
-  return source.replace(/\r/g,'').split(/\n\s*\n/).map(block=>{
-    if (/^#{1,5} /.test(block)) {
-      const level=Math.min(block.match(/^#+/)[0].length+1,6);
-      return `<h${level}>${inline(block.replace(/^#+ /,''))}</h${level}>`;
-    }
-    if (block.split('\n').every(line=>line.startsWith('- '))) return `<ul>${block.split('\n').map(line=>`<li>${inline(line.slice(2))}</li>`).join('')}</ul>`;
-    if (block.startsWith('> ')) return `<blockquote>${inline(block.replace(/^> /gm,''))}</blockquote>`;
-    return `<p>${inline(block).replace(/\n/g,'<br>')}</p>`;
-  }).join('');
+  const lines=source.replace(/\r/g,'').split('\n');
+  const out=[]; let paragraph=[]; let list=[]; let quote=[];
+  const flush=()=>{
+    if(paragraph.length){out.push(`<p>${inline(paragraph.join('\n')).replace(/\n/g,'<br>')}</p>`); paragraph=[];}
+    if(list.length){out.push(`<ul>${list.map(item=>`<li>${inline(item)}</li>`).join('')}</ul>`); list=[];}
+    if(quote.length){out.push(`<blockquote>${inline(quote.join('\n')).replace(/\n/g,'<br>')}</blockquote>`); quote=[];}
+  };
+  for(const line of lines){
+    if(!line.trim()){flush(); continue;}
+    const heading=line.match(/^(#{1,5})\s+(.+)$/);
+    if(heading){flush(); const level=Math.min(heading[1].length+1,6); out.push(`<h${level}>${inline(heading[2])}</h${level}>`); continue;}
+    if(line.startsWith('- ')){if(paragraph.length||quote.length)flush(); list.push(line.slice(2)); continue;}
+    if(line.startsWith('> ')){if(paragraph.length||list.length)flush(); quote.push(line.slice(2)); continue;}
+    if(list.length||quote.length)flush(); paragraph.push(line);
+  }
+  flush(); return out.join('');
 }

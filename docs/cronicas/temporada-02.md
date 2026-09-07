@@ -3,7 +3,8 @@ id: CRON-T02
 titulo: Temporada 02
 categoria: Crônicas
 status: Documentado
-fonte: 01_CRONICAS/README.md`r`nsecao: Temporada 02
+fonte: 01_CRONICAS/README.md
+secao: Temporada 02
 ---
 
 ---

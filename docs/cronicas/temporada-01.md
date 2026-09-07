@@ -3,7 +3,8 @@ id: CRON-T01
 titulo: Temporada 01
 categoria: Crônicas
 status: Documentado
-fonte: 01_CRONICAS/README.md`r`nsecao: Temporada 01
+fonte: 01_CRONICAS/README.md
+secao: Temporada 01
 ---
 
 ---

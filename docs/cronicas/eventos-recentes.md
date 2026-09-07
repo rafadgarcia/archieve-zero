@@ -3,7 +3,8 @@ id: CRON-RECENTES
 titulo: Eventos recentes
 categoria: Crônicas
 status: Documentado
-fonte: 01_CRONICAS/README.md`r`nsecao: Eventos recentes
+fonte: 01_CRONICAS/README.md
+secao: Eventos recentes
 ---
 
 ---

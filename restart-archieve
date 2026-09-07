@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+APP_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROXY_DIR="${PROXY_DIR:-/opt/proxy}"
+BRANCH="${ARCHIVE_BRANCH:-master}"
+
+log() { printf '[archieve] %s\n' "$*"; }
+fail() { printf '[archieve] ERRO: %s\n' "$*" >&2; exit 1; }
+
+[[ "$(id -un)" != "root" ]] || fail 'não execute como root; use o usuário ubuntu.'
+command -v git >/dev/null || fail 'git não encontrado.'
+command -v node >/dev/null || fail 'node não encontrado.'
+
+cd "$APP_DIR"
+[[ -d .git ]] || fail "repositório não encontrado em $APP_DIR"
+[[ -z "$(git status --porcelain)" ]] || fail 'há alterações locais; resolva-as antes de atualizar.'
+
+before="$(git rev-parse HEAD)"
+log "Buscando atualizações da branch $BRANCH..."
+git fetch --prune origin "$BRANCH"
+git merge --ff-only "origin/$BRANCH"
+after="$(git rev-parse HEAD)"
+
+if [[ "$before" == "$after" ]]; then
+  log 'Já está atualizado.'
+  exit 0
+fi
+
+log 'Executando testes...'
+npm test
+
+if [[ -f "$PROXY_DIR/compose.yaml" ]] && docker compose -f "$PROXY_DIR/compose.yaml" ps --status running --services 2>/dev/null | grep -qx caddy; then
+  log 'Conteúdo estático atualizado; nenhum restart do Caddy é necessário.'
+  log 'Recarregando a configuração do Caddy para manter a publicação consistente...'
+  docker compose -f "$PROXY_DIR/compose.yaml" exec -T caddy caddy reload --config /etc/caddy/Caddyfile
+else
+  log 'Caddy não está disponível; atualização dos arquivos concluída sem reinício.'
+fi
+
+log "Atualizado de ${before:0:7} para ${after:0:7}."

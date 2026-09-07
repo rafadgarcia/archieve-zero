@@ -47,3 +47,23 @@ curl -I https://archive.devwolf.com.br/docs/ausente.md
 Esperados: 200, 200, 404. Confirmar também que os três domínios preexistentes continuam respondendo. A recriação do container para adicionar mount pode causar interrupção breve de todos os sites; agendar a primeira mudança. Para rollback, restaurar os dois arquivos de configuração salvos e recriar/recarregar o Caddy; manter a última versão do diretório estático até validar a nova.
 
 Automação futura: testes antes da cópia, deploy por release versionada, aprovação de produção e rollback. Não foi criado workflow de publicação nesta fase.
+
+## Atualização manual na VM
+
+O script `restart-archieve` atualiza o checkout, recusa sobrescrever alterações locais, executa `npm test` e recarrega o Caddy somente se ele estiver ativo. Como o Archive é estático, não há container do app para reiniciar.
+
+Na primeira instalação:
+
+```sh
+cd /opt/archieve-zero
+chmod +x restart-archieve
+```
+
+Para atualizar:
+
+```sh
+cd /opt/archieve-zero
+./restart-archieve
+```
+
+O script usa `master` por padrão. Para outro caminho do proxy, use `PROXY_DIR=/caminho/do/proxy ./restart-archieve`. O nome mantém `archieve` para coincidir com o repositório e o comando já adotados.

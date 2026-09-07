@@ -34,6 +34,11 @@ export function unlockRecord(record, code) {
   return expected && String(code).trim()===expected ? {ok:true,reason:'code'} : {ok:false,reason:'invalid'};
 }
 
+export function buildGraph(docs) {
+  const ids=new Set(docs.map(doc=>doc.id));
+  return docs.flatMap(doc=>[...String(doc.body||'').matchAll(/\[\[([A-Z]+-[\w?]+)\]\]/g)].filter(match=>ids.has(match[1])).map(match=>({from:doc.id,to:match[1]})));
+}
+
 // Deliberately restricted Markdown: no raw HTML or executable URL protocols.
 export function renderMarkdown(source) {
   const inline = text => escape(text.replace(/\[\[REDACTED:[\s\S]*?\]\]/g,'████████')

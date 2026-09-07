@@ -1,4 +1,4 @@
-import {diagnose,escape,isUnlocked,parseDocument,renderMarkdown,search,unlockRecord} from './core.js';
+import {buildGraph,diagnose,escape,isUnlocked,parseDocument,renderMarkdown,search,unlockRecord} from './core.js';
 import {renderAttachments} from './attachments.js';
 import {setupLightbox} from './lightbox.js';
 const $=id=>document.getElementById(id);
@@ -37,6 +37,7 @@ $('categories').addEventListener('click',event=>{
   $('document').innerHTML='<p>Selecione um registro para iniciar a leitura.</p>';
   displayResults();
 });
+$('graph-toggle').addEventListener('click',()=>{const panel=$('graph-panel');const open=panel.hidden;panel.hidden=!open;$('graph-toggle').setAttribute('aria-expanded',String(open));});
 // Keep hash navigation and directory navigation in one state flow.
 $('document').addEventListener('click',event=>{
   const link=event.target.closest('a[href^="#"]');
@@ -73,5 +74,6 @@ async function load(){
   }
   $('integrity').textContent=failed?`ÍNDICE: ${failed} FALHA(S) DE LEITURA`:`ÍNDICE: ${documents.length} REGISTROS`;
   const report=diagnose(documents); $('diagnostic').innerHTML=`<span>REGISTROS: ${report.total}</span><span>FONTES: ${report.sourced}/${report.total}</span><span>CENSURAS: ${report.censored}</span><span>CORRUPÇÕES: ${report.corrupted}</span><span>INSTABILIDADE: ${report.withInstability}/${report.total}</span><span>ESTADOS: ${report.statuses}</span>`;
+  const graph=buildGraph(documents); $('graph-list').innerHTML=graph.length?graph.map(edge=>`<a href="#${edge.from}">${edge.from}</a><span>→</span><a href="#${edge.to}">${edge.to}</a>`).join('<br>'):'<p>Nenhuma relação explícita registrada.</p>';
   displayResults();openDocument();
 }load().catch(()=>{$('result-status').textContent='Não foi possível carregar o acervo. Recarregue a página. Use um servidor HTTP, não file://.';$('integrity').textContent='ÍNDICE: INDISPONÍVEL';});

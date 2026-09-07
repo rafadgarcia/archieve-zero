@@ -4,7 +4,7 @@ Origem: `G:/Meu Drive/RPG/Sessões`. Os arquivos de origem não foram alterados.
 
 ## Critério
 
-Doze registros derivados de seções identificadas, com `fonte` e `secao` visíveis no leitor. IDs e categorias são metadados editoriais. Nenhum percentual de integridade, data de evento ou elemento ausente foi inventado. Relatos, hipóteses e planos permanecem distinguidos no texto.
+Doze registros derivados de seções identificadas, com `fonte` e `secao` visíveis no leitor. Nenhum percentual de integridade, data de evento ou elemento ausente foi inventado. Relatos, hipóteses e planos permanecem distinguidos no texto.
 
 Leitura integral neste lote: compêndio inicial, fichamento de aliados e ameaças, organização Veritus e arquivo das Âncoras/Ciclos. Dossiê Oshino: utilizadas somente as seções iniciais 1–7 lidas; o restante ainda não foi incorporado. Crônicas: leitura exploratória parcial, sem importação de sessões neste lote. Arquivos originais foram inventariados, não comparados integralmente nem importados.
 
